@@ -1,2 +1,2 @@
-# cs1c-address-book
-CS1C Address Book
+# CS1C Address Book
+An address book application built with C++.
