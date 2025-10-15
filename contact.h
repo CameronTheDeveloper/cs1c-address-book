@@ -29,12 +29,12 @@ public:
     void setCity(const std::string &newCity);
     void setGroup(const std::string &newGroup);
     void setAddress(const std::string &newAddress);
-    std::string getName();
-    std::string getPhoneNumber();
-    std::string getEmail();
-    std::string getCity();
-    std::string getGroup();
-    std::string getAddress();
+    const std::string &getName() const;
+    const std::string &getPhoneNumber() const;
+    const std::string &getEmail() const;
+    const std::string &getCity() const;
+    const std::string &getGroup() const;
+    const std::string &getAddress() const;
 
     void addTag(const std::string &newTag);
     void removeTag(const std::string &tagToRemove);
