@@ -35,6 +35,7 @@ public:
     const std::string &getCity() const;
     const std::string &getGroup() const;
     const std::string &getAddress() const;
+    const std::vector<std::string> &getTags() const;
 
     void addTag(const std::string &newTag);
     void removeTag(const std::string &tagToRemove);

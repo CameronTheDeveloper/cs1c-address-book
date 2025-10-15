@@ -71,6 +71,11 @@ const std::string &Contact::getAddress() const
     return address;
 }
 
+const std::vector<std::string> &Contact::getTags() const
+{
+    return tags;
+}
+
 // Tag management methods
 void Contact::addTag(const std::string &newTag)
 {
