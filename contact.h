@@ -16,7 +16,12 @@ private:
 
 public:
     Contact(const std::string &name, const std::string &phoneNumber, const std::string &email, const std::string &contactType);
-    virtual ~Contact();
+    virtual ~Contact() = default;
+
+    virtual std::string getType() const = 0;   // Pure virtual function to make Contact an abstract class
+    virtual std::string serialize() const = 0; // Pure virtual function for serialization
+    virtual void displayInfo() const = 0;      // Pure virtual function for displaying contact info
+
     bool contactTypeIsValid(const std::string &contactTypeInput);
     void setName(const std::string &newName);
     void setPhoneNumber(const std::string &newPhoneNum);
