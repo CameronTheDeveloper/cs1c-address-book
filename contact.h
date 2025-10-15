@@ -15,7 +15,8 @@ private:
     std::vector<std::string> tags;
 
 public:
-    Contact(const std::string &name, const std::string &phoneNumber, const std::string &email, const std::string &contactType);
+    Contact(const std::string &name, const std::string &phoneNumber, const std::string &email,
+            const std::string &city, const std::string &group, const std::string &address);
     virtual ~Contact() = default;
 
     virtual std::string getType() const = 0;   // Pure virtual function to make Contact an abstract class
