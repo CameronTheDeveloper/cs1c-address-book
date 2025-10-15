@@ -23,7 +23,6 @@ public:
     virtual std::string serialize() const = 0; // Pure virtual function for serialization
     virtual void displayInfo() const = 0;      // Pure virtual function for displaying contact info
 
-    bool contactTypeIsValid(const std::string &contactTypeInput);
     void setName(const std::string &newName);
     void setPhoneNumber(const std::string &newPhoneNum);
     void setEmail(const std::string &newEmail);
