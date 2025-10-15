@@ -70,3 +70,18 @@ const std::string &Contact::getAddress() const
 {
     return address;
 }
+
+// Tag management methods
+void Contact::addTag(const std::string &newTag)
+{
+    tags.push_back(newTag);
+}
+
+void Contact::removeTag(const std::string &tagToRemove)
+{
+    auto it = std::find(tags.begin(), tags.end(), tagToRemove);
+    if (it != tags.end())
+    {
+        tags.erase(it);
+    }
+}
