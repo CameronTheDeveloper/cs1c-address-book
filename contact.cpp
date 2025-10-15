@@ -9,6 +9,7 @@ Contact::Contact(const std::string &name, const std::string &phoneNumber, const 
 
 Contact::~Contact() = default;
 
+// Setter methods
 void Contact::setName(const std::string &newName)
 {
     name = newName;
@@ -37,4 +38,35 @@ void Contact::setGroup(const std::string &newGroup)
 void Contact::setAddress(const std::string &newAddress)
 {
     address = newAddress;
+}
+
+// Getter methods
+const std::string &Contact::getName() const
+{
+    return name;
+}
+
+const std::string &Contact::getPhoneNumber() const
+{
+    return phoneNumber;
+}
+
+const std::string &Contact::getEmail() const
+{
+    return email;
+}
+
+const std::string &Contact::getCity() const
+{
+    return city;
+}
+
+const std::string &Contact::getGroup() const
+{
+    return group;
+}
+
+const std::string &Contact::getAddress() const
+{
+    return address;
 }
