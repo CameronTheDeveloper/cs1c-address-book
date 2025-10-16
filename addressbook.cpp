@@ -34,3 +34,28 @@ std::vector<const Contact*> AddressBook::filterByType(const std::string& type) c
     }
     return results;
 }
+
+std::vector<const Contact*> AddressBook::filterByTag(const std::string& tag) const {
+    std::vector<const Contact*> results;
+    
+    for (const auto& contactPtr : contacts) {
+        const std::vector<std::string>& contactTags = contactPtr->getTags();
+        
+        if (std::find(contactTags.begin(), contactTags.end(), tag) != contactTags.end()) {
+            results.push_back(contactPtr.get());
+        }
+    }
+    return results;
+}
+
+
+std::vector<const Contact*> AddressBook::filterByCity(const std::string& city) const {
+    std::vector<const Contact*> results;
+    
+    for (const auto& contactPtr : contacts) {
+        if (contactPtr->getCity() == city) {
+            results.push_back(contactPtr.get());
+        }
+    }
+    return results;
+}
