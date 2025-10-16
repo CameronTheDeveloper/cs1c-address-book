@@ -9,8 +9,20 @@
 
 class AddressBook {
     public:
+        AddressBook() = default;
+        ~AddressBook() = default;
+
+
         // ... (Add, Edit, Delete methods go here)
 
+        void addContact(std::unique_ptr<Contact> newContact); 
+        void listAllContacts() const; 
+        const Contact* viewContact(size_t index) const; 
+
+        size_t findContactIndex(const std::string& name) const; 
+
+        void editContact(size_t index); 
+        void deleteContact(size_t index);
         // Methods for Search and Filtering
         std::vector<const Contact*> searchByName(const std::string &nameQuery) const;
         std::vector<const Contact*> searchByPhoneNumber(const std::string& phoneQuery) const;
