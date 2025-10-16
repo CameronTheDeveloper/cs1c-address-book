@@ -14,9 +14,8 @@ class AddressBook {
         // Methods for Search and Filtering
         std::vector<const Contact*> searchByName(const std::string &nameQuery) const;
         std::vector<const Contact*> filterByType(const std::string &type) const;
-        // ... other search/filter methods (by email, phone, city, tag)
-        
-        // ... (Save, Load, List methods go here)
+        std::vector<const Contact*> searchByPhoneNumber(const std::string& phoneQuery) const;
+        std::vector<const Contact*> searchByEmail(const std::string& emailQuery) const;
 
     private:
         std::vector<std::unique_ptr<Contact>> contacts; 
