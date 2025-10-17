@@ -144,3 +144,19 @@ void AddressBook::editContact(size_t index)
     std::cout << "The editing logic (calling setters like setName(), setCity(), etc.) must be implemented in the calling function (UI).\n";
     
 }
+
+// Delete contact
+void AddressBook::deleteContact(size_t index)
+{
+    if (index >= contacts.size())
+    {
+        std::cout << "Error: Invalid contact index provided for deletion.\n";
+        return;
+    }
+
+    std::string deletedName = contacts[index]->getName();
+
+    contacts.erase(contacts.begin() + index);
+
+    std::cout << "Successfully deleted contact: " << deletedName << ".\n";
+}
