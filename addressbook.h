@@ -31,6 +31,10 @@ class AddressBook {
         std::vector<const Contact*> filterByType(const std::string &type) const;
         std::vector<const Contact*> filterByCity(const std::string& city) const;
         std::vector<const Contact*> filterByTag(const std::string& tag) const;
+
+        bool saveToFile(const std::string& filename) const;
+        bool loadFromFile(const std::string& filename);
+
     private:
         std::vector<std::unique_ptr<Contact>> contacts; 
 };
