@@ -31,6 +31,31 @@ std::vector<const Contact*> AddressBook::searchByName(const std::string& nameQue
     return results;
 }
 
+// Search contacts by phone number
+std::vector<const Contact*> AddressBook::searchByPhoneNumber(const std::string& phoneQuery) const {
+    std::vector<const Contact*> results;
+    
+    for (const auto& contactPtr : contacts) {
+        if (contactPtr->getPhoneNumber().find(phoneQuery) != std::string::npos) {
+            results.push_back(contactPtr.get());
+        }
+    }
+    return results;
+}
+
+// Search contacts by email
+std::vector<const Contact*> AddressBook::searchByEmail(const std::string& emailQuery) const {
+    std::vector<const Contact*> results;
+    
+    for (const auto& contactPtr : contacts) {
+        if (contactPtr->getEmail().find(emailQuery) != std::string::npos) {
+            results.push_back(contactPtr.get());
+        }
+    }
+    return results;
+}
+
+
 // filter function using polymorphism
 std::vector<const Contact*> AddressBook::filterByType(const std::string& type) const {
     std::vector<const Contact*> results;
@@ -124,10 +149,8 @@ size_t AddressBook::findContactIndex(const std::string& name) const
 {
     for (size_t i = 0; i < contacts.size(); ++i)
     {
-        // Case-insensitive comparison is recommended for search/find logic
         std::string contactName = contacts[i]->getName();
         
-        // Simple case-sensitive check for now (can be improved later)
         if (contactName == name) 
         {
             return i;
@@ -193,14 +216,10 @@ std::vector<std::string> tokenize(const std::string& str, char delimiter)
     std::vector<std::string> tokens;
     std::string token;
     
-    // 1. Create a stringstream from the input string
     std::stringstream ss(str);
     
-    // 2. Read from the stringstream until the delimiter is reached
-    // std::getline(stream, string, delimiter) is the key here
     while (std::getline(ss, token, delimiter))
     {
-        // Add the extracted token to the vector
         tokens.push_back(token);
     }
     
