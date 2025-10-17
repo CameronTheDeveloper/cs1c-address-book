@@ -6,6 +6,8 @@
 #include <sstream>
 #include <utility> 
 #include <fstream>
+#include <map>     
+#include <iomanip> 
 
 #include "Person.h"
 #include "Business.h"
@@ -313,4 +315,89 @@ std::unique_ptr<Contact> createContactFromFields(const std::vector<std::string>&
     
     std::cerr << "Warning: Skipping line with unknown type or missing fields: " << type << "\n";
     return nullptr;
+}
+
+// REPORT IMPLEMENTATIONS
+
+// List contacts by type
+void AddressBook::listContactsByType(const std::string& type) const
+{
+    std::vector<const Contact*> filteredList = filterByType(type);
+
+    std::cout << "\n=======================================================\n";
+    std::cout << "          REPORT: CONTACTS OF TYPE '" << type << "' (" << filteredList.size() << ")\n";
+    std::cout << "=======================================================\n";
+    
+    if (filteredList.empty()) {
+        std::cout << "No contacts found for type: " << type << ".\n";
+        return;
+    }
+
+    // Display the details of the filtered contacts
+    for (const Contact* contact : filteredList)
+    {
+        contact->displayInfo(); 
+    }
+}
+
+// Show contacts missing phone number or email
+void AddressBook::showContactsMissingInfo() const
+{
+    std::vector<const Contact*> missingInfoList;
+
+    for (const auto& contactPtr : contacts)
+    {
+        // Check for missing data (empty string)
+        bool phoneMissing = contactPtr->getPhoneNumber().empty();
+        bool emailMissing = contactPtr->getEmail().empty();
+        
+        // If EITHER is missing, add to the report list
+        if (phoneMissing || emailMissing)
+        {
+            missingInfoList.push_back(contactPtr.get());
+        }
+    }
+
+    std::cout << "\n=======================================================\n";
+    std::cout << "         REPORT: CONTACTS MISSING PHONE/EMAIL (" << missingInfoList.size() << ")\n";
+    std::cout << "=======================================================\n";
+
+    if (missingInfoList.empty()) {
+        std::cout << "All contacts have both a phone number and an email address!\n";
+        return;
+    }
+    
+    // Display the details of the missing contacts
+    for (const Contact* contact : missingInfoList)
+    {
+        contact->displayInfo();
+    }
+}
+
+// Display group summaries
+void AddressBook::displayGroupSummaries() const
+{
+    std::map<std::string, int> groupCounts;
+
+    for (const auto& contactPtr : contacts)
+    {
+        std::string group = contactPtr->getGroup();
+        groupCounts[group]++;
+    }
+
+    std::cout << "\n=======================================================\n";
+    std::cout << "             REPORT: CONTACTS GROUP SUMMARY\n";
+    std::cout << "=======================================================\n";
+
+    if (groupCounts.empty()) {
+        std::cout << "The address book is empty or no groups have been assigned.\n";
+        return;
+    }
+
+    for (const auto& pair : groupCounts)
+    {
+        std::cout << "Group: " << std::left << std::setw(15) << pair.first 
+                  << " | Count: " << pair.second << "\n";
+    }
+    std::cout << "=======================================================\n";
 }
