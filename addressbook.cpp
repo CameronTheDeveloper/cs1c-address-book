@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <utility> 
+#include <fstream>
 
 // search function by name
 std::vector<const Contact*> AddressBook::searchByName(const std::string& nameQuery) const {
@@ -159,4 +160,50 @@ void AddressBook::deleteContact(size_t index)
     contacts.erase(contacts.begin() + index);
 
     std::cout << "Successfully deleted contact: " << deletedName << ".\n";
+}
+
+
+bool AddressBook::saveToFile(const std::string& filename) const
+{
+    std::ofstream outFile(filename);
+    if (!outFile.is_open())
+    {
+        std::cerr << "Error: Could not open file " << filename << " for writing.\n";
+        return false;
+    }
+
+    for (const auto& contactPtr : contacts)
+    {
+        outFile << contactPtr->serialize() << "\n";
+    }
+
+    outFile.close();
+    std::cout << "Successfully saved " << contacts.size() << " contacts to " << filename << "\n";
+    return true;
+}
+
+
+bool AddressBook::loadFromFile(const std::string& filename)
+{
+    std::ifstream inFile(filename);
+    if (!inFile.is_open())
+    {
+        std::cerr << "Warning: Could not open file " << filename << ". Starting with an empty address book.\n";
+        return false;
+    }
+
+    contacts.clear(); 
+    std::string line;
+    int contactsLoaded = 0;
+
+    while (std::getline(inFile, line))
+    {
+        if (line.empty()){
+            continue;
+        } 
+    }
+
+    inFile.close();
+    std::cout << "Successfully loaded " << contactsLoaded << " contacts from " << filename << "\n";
+    return true;
 }
