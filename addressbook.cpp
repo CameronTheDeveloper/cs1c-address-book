@@ -111,3 +111,21 @@ const Contact* AddressBook::viewContact(size_t index) const
     }
     return nullptr; 
 }
+
+
+// Returns the index of a contact matching the name.
+size_t AddressBook::findContactIndex(const std::string& name) const
+{
+    for (size_t i = 0; i < contacts.size(); ++i)
+    {
+        // Case-insensitive comparison is recommended for search/find logic
+        std::string contactName = contacts[i]->getName();
+        
+        // Simple case-sensitive check for now (can be improved later)
+        if (contactName == name) 
+        {
+            return i;
+        }
+    }
+    return contacts.size(); // Indicate failure
+}
