@@ -129,3 +129,18 @@ size_t AddressBook::findContactIndex(const std::string& name) const
     }
     return contacts.size(); // Indicate failure
 }
+
+// Edit contact
+void AddressBook::editContact(size_t index)
+{
+    if (index >= contacts.size())
+    {
+        std::cout << "Error: Invalid contact index provided for editing.\n";
+        return;
+    }
+
+    Contact* contactToEdit = contacts[index].get();
+    std::cout << "Starting edit for: " << contactToEdit->getName() << "\n";
+    std::cout << "The editing logic (calling setters like setName(), setCity(), etc.) must be implemented in the calling function (UI).\n";
+    
+}
