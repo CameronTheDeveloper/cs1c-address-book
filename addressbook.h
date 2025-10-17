@@ -35,6 +35,12 @@ class AddressBook {
         bool saveToFile(const std::string& filename) const;
         bool loadFromFile(const std::string& filename);
 
+
+        // Reports
+        void listContactsByType(const std::string& type) const; 
+        void showContactsMissingInfo() const;                    
+        void displayGroupSummaries() const;
+
     private:
         std::vector<std::unique_ptr<Contact>> contacts; 
 };
