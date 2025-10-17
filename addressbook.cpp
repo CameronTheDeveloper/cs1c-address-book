@@ -187,6 +187,27 @@ bool AddressBook::saveToFile(const std::string& filename) const
     return true;
 }
 
+// Help read seperate parts of file
+std::vector<std::string> tokenize(const std::string& str, char delimiter)
+{
+    std::vector<std::string> tokens;
+    std::string token;
+    
+    // 1. Create a stringstream from the input string
+    std::stringstream ss(str);
+    
+    // 2. Read from the stringstream until the delimiter is reached
+    // std::getline(stream, string, delimiter) is the key here
+    while (std::getline(ss, token, delimiter))
+    {
+        // Add the extracted token to the vector
+        tokens.push_back(token);
+    }
+    
+    return tokens;
+}
+
+
 
 bool AddressBook::loadFromFile(const std::string& filename)
 {
@@ -203,9 +224,32 @@ bool AddressBook::loadFromFile(const std::string& filename)
 
     while (std::getline(inFile, line))
     {
-        if (line.empty()){
-            continue;
-        } 
+        if (line.empty()) continue;
+
+        std::vector<std::string> fields = tokenize(line, ','); 
+        
+        if (!fields.empty()) 
+        {
+            std::unique_ptr<Contact> contact = createContactFromFields(fields);
+            
+            if (contact) 
+            {
+                if (fields.size() > 7) { 
+                    std::string tagString = fields.back();
+                    if (!tagString.empty()) {
+                        std::vector<std::string> tags = tokenize(tagString, '|');
+                        for (const auto& tag : tags) {
+                            if (!tag.empty()) {
+                                contact->addTag(tag);
+                            }
+                        }
+                    }
+                }
+                
+                contacts.push_back(std::move(contact));
+                contactsLoaded++;
+            }
+        }
     }
 
     inFile.close();
