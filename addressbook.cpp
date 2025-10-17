@@ -7,6 +7,11 @@
 #include <utility> 
 #include <fstream>
 
+#include "Person.h"
+#include "Business.h"
+#include "Vendor.h"
+#include "Emergency.h"
+
 // search function by name
 std::vector<const Contact*> AddressBook::searchByName(const std::string& nameQuery) const {
     std::vector<const Contact*> results;
@@ -206,4 +211,43 @@ bool AddressBook::loadFromFile(const std::string& filename)
     inFile.close();
     std::cout << "Successfully loaded " << contactsLoaded << " contacts from " << filename << "\n";
     return true;
+}
+
+// Helper function for file I/O
+// the process of loading data from a file and correctly recreating the objects is complex and requires several steps
+std::unique_ptr<Contact> createContactFromFields(const std::vector<std::string>& fields) 
+{
+    if (fields.empty()) {
+        return nullptr;
+    } 
+    const std::string type = fields[0];
+    
+    if (fields.size() < 7){
+        return nullptr; 
+    } 
+    
+    
+    // Extract Base Fields 
+    const std::string& name = fields[1];
+    const std::string& phone = fields[2];
+    const std::string& email = fields[3];
+    const std::string& address = fields[4];
+    const std::string& city = fields[5];
+    const std::string& group = fields[6];
+    
+    if (type == "PERSON" && fields.size() >= 8) {
+        return std::make_unique<Person>(name, phone, email, address, city, group, fields[7]);
+    }
+    else if (type == "BUSINESS" && fields.size() >= 8) {
+        return std::make_unique<Business>(name, phone, email, address, city, group, fields[7]);
+    }
+    else if (type == "VENDOR" && fields.size() >= 9) {
+        return std::make_unique<Vendor>(name, phone, email, address, city, group, fields[7], fields[8]);
+    }
+    else if (type == "EMERGENCY" && fields.size() >= 9) {
+        return std::make_unique<Emergency>(name, phone, email, address, city, group, fields[7], fields[8]);
+    }
+    
+    std::cerr << "Warning: Skipping line with unknown type or missing fields: " << type << "\n";
+    return nullptr;
 }
