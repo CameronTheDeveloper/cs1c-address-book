@@ -135,7 +135,7 @@ void AddressBook::listAllContacts() const
 }
 
 // View a single contact's details
-const Contact* AddressBook::viewContact(size_t index) const
+Contact* AddressBook::viewContact(size_t index)
 {
     // Check for bounds safety
     if (index < contacts.size())

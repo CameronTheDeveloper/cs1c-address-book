@@ -17,7 +17,7 @@ class AddressBook {
 
         void addContact(std::unique_ptr<Contact> newContact); 
         void listAllContacts() const; 
-        const Contact* viewContact(size_t index) const; 
+        Contact* viewContact(size_t index); 
 
         size_t findContactIndex(const std::string& name) const; 
 
